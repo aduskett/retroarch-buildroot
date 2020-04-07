@@ -21,6 +21,7 @@ config BR2_PACKAGE_RETROARCH_FFMPEG
 config BR2_PACKAGE_RETROARCH_EGL
 	bool "EGL support"
 	depends on BR2_TOOLCHAIN_HAS_THREADS # libdrm
+	depends on BR2_PACKAGE_MESA3D_OPENGL_EGL
 	depends on BR2_PACKAGE_XORG7
 	select BR2_PACKAGE_XLIB_LIBXXF86VM
 	help
@@ -32,6 +33,22 @@ config BR2_PACKAGE_RETROARCH_EGL
 comment "EGL support needs an OpenGL EGL backend provided by mesa3d"
 	depends on BR2_PACKAGE_XORG7
 	depends on !BR2_PACKAGE_MESA3D_OPENGL_EGL
+
+config BR2_PACKAGE_RETROARCH_GLES
+	bool "GLES support"
+	depends on BR2_TOOLCHAIN_HAS_THREADS # libdrm
+	depends on BR2_PACKAGE_MESA3D_OPENGL_ES
+	depends on BR2_PACKAGE_XORG7
+	select BR2_PACKAGE_XLIB_LIBXXF86VM
+	help
+	  KMS (Kernel Mode Setting) mode is a feature where RetroArch
+	  can use the OpenGL driver outside Xorg, running straight in
+	  the virtual terminal. It is a fairly obscure feature, but
+	  very powerful in a console scenario.
+
+comment "GLES support needs an OpenGLES backend provided by mesa3d"
+	depends on BR2_PACKAGE_XORG7
+	depends on !BR2_PACKAGE_MESA3D_OPENGL_ES
 
 config BR2_PACKAGE_RETROARCH_KMS
 	bool "KMS support"
